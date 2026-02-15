@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.5rem;
+        /* Warm neutral backgrounds with beige/cream tones */
+        --background: 0.98 0.01 85;
+        --foreground: 0.25 0.02 85;
+        --card: 1 0.005 85;
+        --card-foreground: 0.25 0.02 85;
+        --popover: 1 0.005 85;
+        --popover-foreground: 0.25 0.02 85;
+        /* Green accent for financial/growth theme */
+        --primary: 0.55 0.15 152;
+        --primary-foreground: 0.98 0.01 152;
+        --secondary: 0.92 0.01 85;
+        --secondary-foreground: 0.25 0.02 85;
+        --muted: 0.94 0.01 85;
+        --muted-foreground: 0.50 0.02 85;
+        --accent: 0.92 0.01 85;
+        --accent-foreground: 0.25 0.02 85;
+        --destructive: 0.55 0.20 25;
+        --destructive-foreground: 0.98 0.01 25;
+        --border: 0.88 0.01 85;
+        --input: 0.88 0.01 85;
+        --ring: 0.55 0.15 152;
+        --chart-1: 0.55 0.15 152;
+        --chart-2: 0.60 0.12 175;
+        --chart-3: 0.65 0.10 195;
+        --chart-4: 0.50 0.18 140;
+        --chart-5: 0.58 0.14 165;
+    }
+
+    .dark {
+        --background: 0.18 0.02 85;
+        --foreground: 0.95 0.01 85;
+        --card: 0.22 0.02 85;
+        --card-foreground: 0.95 0.01 85;
+        --popover: 0.20 0.02 85;
+        --popover-foreground: 0.95 0.01 85;
+        --primary: 0.60 0.18 152;
+        --primary-foreground: 0.15 0.02 152;
+        --secondary: 0.28 0.02 85;
+        --secondary-foreground: 0.95 0.01 85;
+        --muted: 0.28 0.02 85;
+        --muted-foreground: 0.65 0.02 85;
+        --accent: 0.32 0.02 85;
+        --accent-foreground: 0.95 0.01 85;
+        --destructive: 0.60 0.22 25;
+        --destructive-foreground: 0.95 0.01 25;
+        --border: 0.32 0.02 85;
+        --input: 0.32 0.02 85;
+        --ring: 0.60 0.18 152;
+        --chart-1: 0.60 0.18 152;
+        --chart-2: 0.65 0.15 175;
+        --chart-3: 0.70 0.12 195;
+        --chart-4: 0.55 0.20 140;
+        --chart-5: 0.62 0.16 165;
+    }
+
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: "rlig" 1, "calt" 1;
+    }
+}
+

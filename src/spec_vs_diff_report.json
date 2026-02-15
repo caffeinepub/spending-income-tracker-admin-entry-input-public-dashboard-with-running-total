@@ -1,0 +1,103 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-15T12:50:01.995Z",
+  "summary": "Core public dashboard and admin entry flow are largely present, but several backend and admin requirements are missing (durable persistence, admin bootstrapping/transfer, and explicit date input). The diff also adds multiple unrequested features (user profiles, secret-token access-control initialization, extra dashboard stats, and Caffeine attribution).",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "Backend stores entries durably in the single Motoko main actor (persistence across upgrades).",
+      "reason": "The added backend uses in-memory `Map.empty` bindings (`entries`, `userProfiles`) with no `stable var` or upgrade hooks shown, so durability/persistence is not evidenced.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-1",
+      "requirement": "Income entries contain an admin-provided date field (date is part of entry input).",
+      "reason": "`createEntry` does not accept a date parameter and instead sets `date = Time.now()`, so the date is not provided as part of entry creation as required by the admin entry inputs.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/pages/AdminPage.tsx"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "If admin is unset, the first authenticated caller becomes the admin.",
+      "reason": "No logic is shown that sets an initial admin based on first authenticated caller; `createEntry` simply checks `AccessControl.isAdmin` and traps otherwise.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "Allow the current admin to transfer admin rights to another principal.",
+      "reason": "No method for transferring admin (e.g., `transferAdmin(newPrincipal)`) is shown in the backend actor.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Admin panel add-entry form includes inputs for date, ICP amount, and ICP token value.",
+      "reason": "The admin page state and submission only include `icpAmount` and `icpTokenValue`; no date input/state is evidenced (and backend doesn’t accept date either).",
+      "evidence": [
+        "frontend/src/pages/AdminPage.tsx",
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "User profile feature (get/save user profiles) gated by a `#user` permission.",
+      "reason": "BuildRequest does not mention user profiles or user permissions beyond a single admin principal.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Secret-token-based access control initialization via URL parameter `caffeineAdminToken` and actor method `_initializeAccessControlWithSecret`.",
+      "reason": "BuildRequest specifies admin authorization via Internet Identity principals (first authenticated caller becomes admin; admin transfer). No secret token bootstrapping mechanism is requested.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts",
+        "frontend/src/utils/urlParams.ts"
+      ]
+    },
+    {
+      "description": "Additional dashboard metrics (Total Entries, Average Income).",
+      "reason": "REQ-3 only asks for running total income and a list/table of entries; these extra stats are not requested.",
+      "evidence": [
+        "frontend/src/pages/DashboardPage.tsx"
+      ]
+    },
+    {
+      "description": "Caffeine.ai footer attribution/link and related UI elements.",
+      "reason": "Not requested in any requirement (theme/layout requirements do not mention external attribution).",
+      "evidence": [
+        "frontend/src/components/AppLayout.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.78,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/AppLayout.tsx",
+    "frontend/src/components/EntriesTable.tsx",
+    "frontend/src/components/LoginButton.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/AdminPage.tsx",
+    "frontend/src/pages/DashboardPage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

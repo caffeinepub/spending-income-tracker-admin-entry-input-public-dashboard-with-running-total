@@ -1,0 +1,69 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-public-dashboard-page-no-login-required-that-displays-1-the-running-total-income-and-2-a-table-list-of-all-entries-with-date-icp-amount-icp-token-value-and-computed-income-per-entry",
+      "featureTitle": "Create a public dashboard page (no login required) that displays: (1) the running total income and (2) a table/list of all entries with date, ICP amount, ICP token value, and computed income per entry.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/EntriesTable.tsx",
+        "frontend/src/pages/DashboardPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-an-admin-panel-page-where-the-user-can-sign-in-with-internet-identity-and-if-authorized-as-admin-add-a-new-entry-date-icp-amount-icp-token-value-on-successful-submission-the-public-dashboard-data-is-refreshed",
+      "featureTitle": "Create an admin panel page where the user can sign in with Internet Identity and, if authorized as admin, add a new entry (date, ICP amount, ICP token value). On successful submission, the public dashboard data is refreshed.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/LoginButton.tsx",
+        "frontend/src/pages/AdminPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-coherent-visual-theme-across-the-app-layout-typography-spacing-and-component-styling-suitable-for-a-financial-ledger-use-a-warm-neutral-palette-with-green-accents-avoid-blue-purple-and-consistent-styling-for-cards-tables-and-forms",
+      "featureTitle": "Apply a coherent visual theme across the app (layout, typography, spacing, and component styling) suitable for a financial ledger. Use a warm neutral palette with green accents (avoid blue/purple) and consistent styling for cards, tables, and forms.",
+      "files": [
+        "frontend/src/components/AppLayout.tsx",
+        "frontend/src/index.css",
+        "frontend/src/pages/AdminPage.tsx",
+        "frontend/src/pages/DashboardPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

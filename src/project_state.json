@@ -1,0 +1,82 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Spending/income tracking app: admin logs in with Internet Identity to add entries (date, ICP amount, ICP token value); public (no login) dashboard lists all entries and shows running total income computed as ICP amount × token value.",
+  "architectural_notes": [
+    "Use Internet Identity for admin authentication; public users access read-only views without authentication."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-create-a-public-dashboard-page-no-login-required-that-displays-1-the-running-total-income-and-2-a-table-list-of-all-entries-with-date-icp-amount-icp-token-value-and-computed-income-per-entry",
+      "title": "Create a public dashboard page (no login required) that displays: (1) the running total income and (2) a table/list of all entries with date, ICP amount, ICP token value, and computed income per entry.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-admin-panel-page-where-the-user-can-sign-in-with-internet-identity-and-if-authorized-as-admin-add-a-new-entry-date-icp-amount-icp-token-value-on-successful-submission-the-public-dashboard-data-is-refreshed",
+      "title": "Create an admin panel page where the user can sign in with Internet Identity and, if authorized as admin, add a new entry (date, ICP amount, ICP token value). On successful submission, the public dashboard data is refreshed.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-coherent-visual-theme-across-the-app-layout-typography-spacing-and-component-styling-suitable-for-a-financial-ledger-use-a-warm-neutral-palette-with-green-accents-avoid-blue-purple-and-consistent-styling-for-cards-tables-and-forms",
+      "title": "Apply a coherent visual theme across the app (layout, typography, spacing, and component styling) suitable for a financial ledger. Use a warm neutral palette with green accents (avoid blue/purple) and consistent styling for cards, tables, and forms.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Admin panel with Internet Identity login for admin-only access",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Admin can add spending/income entries with date, ICP amount, and ICP token value",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Public (no login) dashboard that displays list of all entries and computed totals",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Calculate income as a running total of (ICP amount × token value) across entries",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Implement backend data model and persistence for income entries, each containing: date, ICP amount, ICP token value, and derived income (ICP amount × ICP token value). Provide query methods to list all entries publicly and compute the running total income across all entries.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Add admin authorization using Internet Identity principals: only an admin can create entries. If no admin is set yet, set the first authenticated caller to be the admin; allow the current admin to transfer admin rights to another principal.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Spending/Income Tracker: Admin entry input + Public dashboard with running total",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

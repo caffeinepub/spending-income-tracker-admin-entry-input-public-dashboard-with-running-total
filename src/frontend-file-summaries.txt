@@ -1,0 +1,11 @@
+{
+  "frontend/src/index.css": "Global styles with warm neutral + green accent OKLCH color system for light and dark modes, optimized for a financial ledger aesthetic.",
+  "frontend/tailwind.config.js": "Tailwind configuration with custom fonts (Inter, JetBrains Mono), extended color tokens, border radii, and soft shadow utilities.",
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup, defining routes for dashboard (/) and admin (/admin) pages within a shared layout.",
+  "frontend/src/components/AppLayout.tsx": "Shared layout component with header navigation, logo, route links, and footer with Caffeine attribution.",
+  "frontend/src/components/LoginButton.tsx": "Internet Identity login/logout button component with loading states and query cache clearing on logout.",
+  "frontend/src/components/EntriesTable.tsx": "Reusable table component displaying income entries with formatted dates, ICP amounts, token values, and calculated income.",
+  "frontend/src/pages/DashboardPage.tsx": "Public dashboard page showing total income statistics cards and a full list of all income entries without requiring authentication.",
+  "frontend/src/pages/AdminPage.tsx": "Admin panel page with Internet Identity authentication, admin role verification, and a form to add new income entries.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for fetching entries, checking admin status, and creating new income entries with automatic cache invalidation."
+}

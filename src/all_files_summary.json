@@ -1,0 +1,21 @@
+{
+  "backend/main.mo": "Motoko canister managing user profiles with access control plus admin‑created income entries and public queries for entry listing and total income.",
+  "feature_evidence.json": "Feature evidence report mapping implemented features to related frontend files, components, and test IDs.",
+  "frontend-file-summaries.txt": "Prewritten summaries describing the purpose of each frontend file in the project.",
+  "frontend/index.css": "Tailwind base styles defining a warm neutral OKLCH theme with light/dark mode variables.",
+  "frontend/index.html": "HTML entrypoint loading the React app via main.tsx.",
+  "frontend/src/App.tsx": "TanStack Router setup defining the root layout and routes for dashboard and admin pages.",
+  "frontend/src/components/AppLayout.tsx": "Shared layout with header navigation, page container, and footer branding.",
+  "frontend/src/components/EntriesTable.tsx": "Table component that formats and displays income entries with loading and empty states.",
+  "frontend/src/components/LoginButton.tsx": "Internet Identity login/logout button handling auth flow and query cache clearing.",
+  "frontend/src/hooks/useActor.ts": "Hook that creates and manages the authenticated or anonymous backend actor and invalidates dependent queries on change.",
+  "frontend/src/hooks/useInternetIdentity.ts": "Provides a React context and provider for managing Internet Identity authentication, including loading stored identities and handling login state.",
+  "frontend/src/hooks/useQueries.ts": "Defines React Query hooks for fetching entries, checking admin status, and creating income entries via the backend actor.",
+  "frontend/src/index.css": "Sets up Tailwind base styles and defines light/dark theme color variables and global styling.",
+  "frontend/src/main.tsx": "Bootstraps the React app, wrapping it with QueryClientProvider and InternetIdentityProvider.",
+  "frontend/src/pages/AdminPage.tsx": "Renders an admin interface that requires authentication and admin status, allowing creation of new income entries.",
+  "frontend/src/pages/DashboardPage.tsx": "Displays income statistics and a table of entries using data loaded from the backend.",
+  "frontend/src/utils/urlParams.ts": "Utility functions for reading, persisting, and clearing URL parameters and session-stored values.",
+  "frontend/tailwind.config.js": "Tailwind configuration extending theme colors, fonts, animations, and enabling plugins like typography and container queries.",
+  "project_state.json": "Defines the project state for a spending/income tracking app with admin Internet Identity login, public dashboard, existing features, and pending feature requests. Contains metadata, architecture notes, and requirements for admin auth, entry creation, and income calculations."
+}
