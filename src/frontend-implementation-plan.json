@@ -1,104 +1,31 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Income Tracker: Public dashboard + Internet Identity admin entry panel (frontend)",
+  "title": "Sort entries by newest date first",
   "requirements": [
     {
-      "id": "REQ-3",
-      "summary": "Build a public (no-login) dashboard showing running total income and a full entries table with per-entry computed income.",
+      "id": "REQ-2",
+      "summary": "Ensure the EntriesTable component displays entries in the order received from the backend without additional sorting",
       "acceptanceCriteria": [
-        "Opening the app without signing in shows the dashboard with totals and entries.",
-        "The entries list shows date, ICP amount, ICP token value, and per-entry income (amount × token value).",
-        "The total income matches the sum of per-entry income values shown."
+        "The EntriesTable renders entries in the exact order provided by the getEntries query",
+        "No client-side sorting is applied that would change the backend-provided order",
+        "The newest entry appears at the top of the table"
       ],
       "file_operations": [
-        {
-          "path": "frontend/src/hooks/useIncomeEntries.ts",
-          "operation": "create",
-          "description": "Create React Query hook to fetch the public list of income entries via the backend actor (getEntries) using the anonymous actor when not authenticated."
-        },
         {
           "path": "frontend/src/components/EntriesTable.tsx",
-          "operation": "create",
-          "description": "Create a reusable table/list component that renders date, ICP amount, ICP token value, and computed income (icpAmount × icpTokenValue) per entry; format values for readability."
-        },
-        {
-          "path": "frontend/src/pages/DashboardPage.tsx",
-          "operation": "create",
-          "description": "Create the public dashboard page that loads entries, computes the running total as sum(icpAmount × icpTokenValue) from the displayed entries, and renders the EntriesTable."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "create",
-          "description": "Create the application shell that routes to the Dashboard page by default (public) and provides navigation to the admin panel route without requiring login for dashboard access."
-        }
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "summary": "Add an admin panel page with Internet Identity sign-in/out and an authorized admin-only add-entry form that refreshes dashboard data after submission.",
-      "acceptanceCriteria": [
-        "Admin panel provides Internet Identity sign-in/out controls.",
-        "Admin panel shows an add-entry form with inputs for date, ICP amount, and ICP token value.",
-        "Submitting the form as admin creates a new backend entry and updates the UI list/total afterward.",
-        "If a signed-in user is not admin, the admin panel shows an access-denied state and does not allow submission."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/LoginButton.tsx",
-          "operation": "create",
-          "description": "Implement Internet Identity sign-in/out controls using the selected \"authorization\" component’s frontend guidance (login/logout + clear React Query cache on logout). Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/hooks/useIsAdmin.ts",
-          "operation": "create",
-          "description": "Create a React Query hook that checks whether the current caller is admin via the backend actor (isCallerAdmin) and exposes loading/error state for gating the admin UI."
-        },
-        {
-          "path": "frontend/src/hooks/useCreateIncomeEntry.ts",
-          "operation": "create",
-          "description": "Create a React Query mutation hook to create a new income entry via the backend actor (createEntry) and invalidate/refetch the entries queries after success."
-        },
-        {
-          "path": "frontend/src/pages/AdminPage.tsx",
-          "operation": "create",
-          "description": "Create the admin panel page: show LoginButton; if authenticated and admin, show add-entry form (date, ICP amount, ICP token value) and submit via mutation; if authenticated but not admin, show access-denied state; on success, trigger refetch so the public dashboard updates."
-        },
-        {
-          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Wire the new AdminPage into the app’s navigation/routing (e.g., hash route /admin) while keeping the Dashboard public and accessible without login."
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "Apply a consistent warm-neutral + green-accent financial-ledger theme across dashboard and admin UI (layout, cards, tables, forms).",
-      "acceptanceCriteria": [
-        "Public dashboard and admin panel share consistent typography, spacing, and component styling.",
-        "Primary accents are green with warm neutral backgrounds; blue/purple are not the dominant theme colors.",
-        "Tables/forms are readable and visually aligned with the chosen theme."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/index.css",
-          "operation": "create",
-          "description": "Add global Tailwind base styles and define a warm neutral palette with green accents using CSS variables compatible with the existing Tailwind config (avoid blue/purple dominance)."
-        },
-        {
-          "path": "frontend/src/components/AppLayout.tsx",
-          "operation": "create",
-          "description": "Create a shared layout component (header + container + consistent spacing) used by both DashboardPage and AdminPage to unify typography, cards, and section styling."
+          "description": "Review and verify that the component renders entries in the order received from the backend without applying any client-side sorting logic. Ensure the entries array is displayed in its original order from the getEntries or getEntriesByPerson queries."
         },
         {
           "path": "frontend/src/pages/DashboardPage.tsx",
           "operation": "modify",
-          "description": "Apply themed styling (ledger-like cards/sections, table spacing/typography) via Tailwind classes and AppLayout so the dashboard matches the global theme."
+          "description": "Review the usage of entries data fetched from useGetEntries or useGetEntriesByPerson hooks. Verify that no sorting operations are applied to the entries array before passing it to EntriesTable. Ensure the component preserves the backend-provided order."
         },
         {
           "path": "frontend/src/pages/AdminPage.tsx",
           "operation": "modify",
-          "description": "Apply the same themed styling to the admin form, access-denied state, and page layout to match the dashboard."
+          "description": "Review the usage of entries data in the admin interface. Verify that no sorting operations are applied to the entries array before displaying it. Ensure entries are shown in the order received from the backend."
         }
       ]
     }

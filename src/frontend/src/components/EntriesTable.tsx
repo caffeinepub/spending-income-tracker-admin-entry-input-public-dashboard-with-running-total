@@ -1,12 +1,33 @@
 import { IncomeEntry } from '../backend';
-import { Calendar, TrendingUp, DollarSign } from 'lucide-react';
+import { Calendar, TrendingUp, DollarSign, Trash2, Loader2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
 interface EntriesTableProps {
   entries: IncomeEntry[];
   isLoading?: boolean;
+  showDeleteAction?: boolean;
+  onDeleteEntry?: (timestamp: bigint) => void;
+  deletingEntryTimestamp?: bigint | null;
 }
 
-export default function EntriesTable({ entries, isLoading }: EntriesTableProps) {
+export default function EntriesTable({
+  entries,
+  isLoading,
+  showDeleteAction = false,
+  onDeleteEntry,
+  deletingEntryTimestamp,
+}: EntriesTableProps) {
   const formatDate = (timestamp: bigint) => {
     const date = new Date(Number(timestamp) / 1_000_000);
     return date.toLocaleDateString('en-US', {
@@ -80,17 +101,18 @@ export default function EntriesTable({ entries, isLoading }: EntriesTableProps) 
                   Income
                 </div>
               </th>
+              {showDeleteAction && (
+                <th className="text-right py-4 px-6 text-sm font-semibold text-foreground">Actions</th>
+              )}
             </tr>
           </thead>
           <tbody>
-            {entries.map((entry, index) => (
+            {entries.map((entry) => (
               <tr
-                key={index}
+                key={entry.timestamp.toString()}
                 className="border-b border-border last:border-0 hover:bg-accent/50 transition-colors"
               >
-                <td className="py-4 px-6 text-sm text-foreground font-medium">
-                  {formatDate(entry.date)}
-                </td>
+                <td className="py-4 px-6 text-sm text-foreground font-medium">{formatDate(entry.date)}</td>
                 <td className="py-4 px-6 text-sm text-right font-mono text-muted-foreground">
                   {formatNumber(entry.icpAmount)}
                 </td>
@@ -100,6 +122,43 @@ export default function EntriesTable({ entries, isLoading }: EntriesTableProps) 
                 <td className="py-4 px-6 text-sm text-right font-mono font-semibold text-primary">
                   ${formatNumber(entry.incomeValue)}
                 </td>
+                {showDeleteAction && onDeleteEntry && (
+                  <td className="py-4 px-6 text-right">
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          disabled={deletingEntryTimestamp === entry.timestamp}
+                        >
+                          {deletingEntryTimestamp === entry.timestamp ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                          ) : (
+                            <Trash2 className="w-4 h-4 text-destructive" />
+                          )}
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Delete Income Entry</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Are you sure you want to delete this income entry from {formatDate(entry.date)}? This
+                            action cannot be undone.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => onDeleteEntry(entry.timestamp)}
+                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                          >
+                            Delete
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
@@ -108,4 +167,3 @@ export default function EntriesTable({ entries, isLoading }: EntriesTableProps) 
     </div>
   );
 }
-

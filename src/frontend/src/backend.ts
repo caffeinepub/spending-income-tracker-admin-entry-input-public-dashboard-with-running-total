@@ -93,8 +93,14 @@ export type Time = bigint;
 export interface IncomeEntry {
     icpTokenValue: number;
     date: Time;
+    personId: bigint;
+    timestamp: Time;
     incomeValue: number;
     icpAmount: number;
+}
+export interface Person {
+    id: bigint;
+    name: string;
 }
 export interface UserProfile {
     name: string;
@@ -107,16 +113,24 @@ export enum UserRole {
 export interface backendInterface {
     _initializeAccessControlWithSecret(userSecret: string): Promise<void>;
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
-    createEntry(icpAmount: number, icpTokenValue: number): Promise<void>;
+    createEntry(personId: bigint, icpAmount: number, icpTokenValue: number, date: Time, adminToken: string, userProvidedToken: string): Promise<void>;
+    createPerson(name: string, adminToken: string, userProvidedToken: string): Promise<bigint>;
+    deleteEntry(timestamp: Time, adminToken: string, userProvidedToken: string): Promise<void>;
+    deletePerson(personId: bigint, adminToken: string, userProvidedToken: string): Promise<void>;
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
     getEntries(): Promise<Array<IncomeEntry>>;
+    getEntriesByPerson(personId: bigint): Promise<Array<IncomeEntry>>;
+    getPerson(personId: bigint): Promise<Person | null>;
+    getPersons(): Promise<Array<Person>>;
+    getRolling30DayIncomeSum(personId: bigint): Promise<number>;
     getTotalIncome(): Promise<number>;
+    getTotalIncomeByPerson(personId: bigint): Promise<number>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
-    saveCallerUserProfile(profile: UserProfile): Promise<void>;
+    saveCallerUserProfile(profile: UserProfile, adminToken: string, userProvidedToken: string): Promise<void>;
 }
-import type { UserProfile as _UserProfile, UserRole as _UserRole } from "./declarations/backend.did.d.ts";
+import type { Person as _Person, UserProfile as _UserProfile, UserRole as _UserRole } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
     async _initializeAccessControlWithSecret(arg0: string): Promise<void> {
@@ -147,17 +161,59 @@ export class Backend implements backendInterface {
             return result;
         }
     }
-    async createEntry(arg0: number, arg1: number): Promise<void> {
+    async createEntry(arg0: bigint, arg1: number, arg2: number, arg3: Time, arg4: string, arg5: string): Promise<void> {
         if (this.processError) {
             try {
-                const result = await this.actor.createEntry(arg0, arg1);
+                const result = await this.actor.createEntry(arg0, arg1, arg2, arg3, arg4, arg5);
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.createEntry(arg0, arg1);
+            const result = await this.actor.createEntry(arg0, arg1, arg2, arg3, arg4, arg5);
+            return result;
+        }
+    }
+    async createPerson(arg0: string, arg1: string, arg2: string): Promise<bigint> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.createPerson(arg0, arg1, arg2);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.createPerson(arg0, arg1, arg2);
+            return result;
+        }
+    }
+    async deleteEntry(arg0: Time, arg1: string, arg2: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.deleteEntry(arg0, arg1, arg2);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.deleteEntry(arg0, arg1, arg2);
+            return result;
+        }
+    }
+    async deletePerson(arg0: bigint, arg1: string, arg2: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.deletePerson(arg0, arg1, arg2);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.deletePerson(arg0, arg1, arg2);
             return result;
         }
     }
@@ -203,6 +259,62 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async getEntriesByPerson(arg0: bigint): Promise<Array<IncomeEntry>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getEntriesByPerson(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getEntriesByPerson(arg0);
+            return result;
+        }
+    }
+    async getPerson(arg0: bigint): Promise<Person | null> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getPerson(arg0);
+                return from_candid_opt_n6(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getPerson(arg0);
+            return from_candid_opt_n6(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getPersons(): Promise<Array<Person>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getPersons();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getPersons();
+            return result;
+        }
+    }
+    async getRolling30DayIncomeSum(arg0: bigint): Promise<number> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getRolling30DayIncomeSum(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getRolling30DayIncomeSum(arg0);
+            return result;
+        }
+    }
     async getTotalIncome(): Promise<number> {
         if (this.processError) {
             try {
@@ -214,6 +326,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.getTotalIncome();
+            return result;
+        }
+    }
+    async getTotalIncomeByPerson(arg0: bigint): Promise<number> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getTotalIncomeByPerson(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getTotalIncomeByPerson(arg0);
             return result;
         }
     }
@@ -245,17 +371,17 @@ export class Backend implements backendInterface {
             return result;
         }
     }
-    async saveCallerUserProfile(arg0: UserProfile): Promise<void> {
+    async saveCallerUserProfile(arg0: UserProfile, arg1: string, arg2: string): Promise<void> {
         if (this.processError) {
             try {
-                const result = await this.actor.saveCallerUserProfile(arg0);
+                const result = await this.actor.saveCallerUserProfile(arg0, arg1, arg2);
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.saveCallerUserProfile(arg0);
+            const result = await this.actor.saveCallerUserProfile(arg0, arg1, arg2);
             return result;
         }
     }
@@ -264,6 +390,9 @@ function from_candid_UserRole_n4(_uploadFile: (file: ExternalBlob) => Promise<Ui
     return from_candid_variant_n5(_uploadFile, _downloadFile, value);
 }
 function from_candid_opt_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_UserProfile]): UserProfile | null {
+    return value.length === 0 ? null : value[0];
+}
+function from_candid_opt_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_Person]): Person | null {
     return value.length === 0 ? null : value[0];
 }
 function from_candid_variant_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {

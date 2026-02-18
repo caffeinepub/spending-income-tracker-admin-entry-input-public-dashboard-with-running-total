@@ -13,9 +13,12 @@ import type { Principal } from '@icp-sdk/core/principal';
 export interface IncomeEntry {
   'icpTokenValue' : number,
   'date' : Time,
+  'personId' : bigint,
+  'timestamp' : Time,
   'incomeValue' : number,
   'icpAmount' : number,
 }
+export interface Person { 'id' : bigint, 'name' : string }
 export type Time = bigint;
 export interface UserProfile { 'name' : string }
 export type UserRole = { 'admin' : null } |
@@ -24,14 +27,28 @@ export type UserRole = { 'admin' : null } |
 export interface _SERVICE {
   '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
   'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
-  'createEntry' : ActorMethod<[number, number], undefined>,
+  'createEntry' : ActorMethod<
+    [bigint, number, number, Time, string, string],
+    undefined
+  >,
+  'createPerson' : ActorMethod<[string, string, string], bigint>,
+  'deleteEntry' : ActorMethod<[Time, string, string], undefined>,
+  'deletePerson' : ActorMethod<[bigint, string, string], undefined>,
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
   'getEntries' : ActorMethod<[], Array<IncomeEntry>>,
+  'getEntriesByPerson' : ActorMethod<[bigint], Array<IncomeEntry>>,
+  'getPerson' : ActorMethod<[bigint], [] | [Person]>,
+  'getPersons' : ActorMethod<[], Array<Person>>,
+  'getRolling30DayIncomeSum' : ActorMethod<[bigint], number>,
   'getTotalIncome' : ActorMethod<[], number>,
+  'getTotalIncomeByPerson' : ActorMethod<[bigint], number>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
-  'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
+  'saveCallerUserProfile' : ActorMethod<
+    [UserProfile, string, string],
+    undefined
+  >,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

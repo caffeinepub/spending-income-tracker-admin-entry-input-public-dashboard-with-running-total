@@ -1,11 +1,16 @@
 {
   "frontend/src/index.css": "Global styles with warm neutral + green accent OKLCH color system for light and dark modes, optimized for a financial ledger aesthetic.",
   "frontend/tailwind.config.js": "Tailwind configuration with custom fonts (Inter, JetBrains Mono), extended color tokens, border radii, and soft shadow utilities.",
-  "frontend/src/App.tsx": "Main application component with TanStack Router setup, defining routes for dashboard (/) and admin (/admin) pages within a shared layout.",
-  "frontend/src/components/AppLayout.tsx": "Shared layout component with header navigation, logo, route links, and footer with Caffeine attribution.",
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup, defining routes for dashboard (/), income entry (/income-entry), and admin (/admin) pages within a shared layout.",
+  "frontend/src/components/AppLayout.tsx": "Shared layout component with header navigation including Dashboard, Income Entry, and Admin links, logo, and footer with Caffeine attribution.",
   "frontend/src/components/LoginButton.tsx": "Internet Identity login/logout button component with loading states and query cache clearing on logout.",
-  "frontend/src/components/EntriesTable.tsx": "Reusable table component displaying income entries with formatted dates, ICP amounts, token values, and calculated income.",
-  "frontend/src/pages/DashboardPage.tsx": "Public dashboard page showing total income statistics cards and a full list of all income entries without requiring authentication.",
-  "frontend/src/pages/AdminPage.tsx": "Admin panel page with Internet Identity authentication, admin role verification, and a form to add new income entries.",
-  "frontend/src/hooks/useQueries.ts": "React Query hooks for fetching entries, checking admin status, and creating new income entries with automatic cache invalidation."
+  "frontend/src/components/EntriesTable.tsx": "Reusable table component displaying income entries with formatted dates, amounts, and optional delete actions per row with confirmation dialogs and loading states.",
+  "frontend/src/pages/DashboardPage.tsx": "Public dashboard page with person tabs displaying person-specific income statistics including total income, total entries, and monthly income (rolling 30-day window) with empty state when no persons exist.",
+  "frontend/src/pages/AdminPage.tsx": "Admin panel page with person management (create/delete), income entries management (delete), bootstrap admin access, and confirmation dialogs for all delete operations with loading states.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for all backend operations including updated useCreateIncomeEntry with date parameter, new useDeletePerson and useDeleteEntry mutations with proper cache invalidation.",
+  "frontend/src/components/PersonTabs.tsx": "Keyboard-accessible tab strip component that renders person tabs, highlights the selected person, and handles tab selection.",
+  "frontend/src/utils/adminTokens.ts": "Centralized helper that returns non-empty adminToken and userProvidedToken values with safe fallbacks, reading from URL/session via getSecretParameter or using default strings when missing.",
+  "frontend/src/utils/urlParams.ts": "Utility functions for parsing and managing URL parameters with support for both hash-only format (#caffeineAdminToken=xxx) and hash routes with query strings (#/admin?caffeineAdminToken=xxx), persisting secrets in sessionStorage across navigations.",
+  "frontend/src/pages/IncomeEntryPage.tsx": "Income Entry page with admin-only access control, form for adding income entries with person selection, ICP amount, token value, and required date received inputs (Day/Month/Year) with validation.",
+  "frontend/src/utils/receivedDate.ts": "Utility functions for validating day/month/year inputs and converting user-entered dates to backend Time format (nanoseconds since epoch)."
 }

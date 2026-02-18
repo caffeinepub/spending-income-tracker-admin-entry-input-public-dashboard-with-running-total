@@ -1,6 +1,7 @@
 import { createRouter, createRoute, createRootRoute, RouterProvider, Outlet } from '@tanstack/react-router';
 import DashboardPage from './pages/DashboardPage';
 import AdminPage from './pages/AdminPage';
+import IncomeEntryPage from './pages/IncomeEntryPage';
 import AppLayout from './components/AppLayout';
 
 const rootRoute = createRootRoute({
@@ -23,7 +24,13 @@ const adminRoute = createRoute({
   component: AdminPage,
 });
 
-const routeTree = rootRoute.addChildren([indexRoute, adminRoute]);
+const incomeEntryRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/income-entry',
+  component: IncomeEntryPage,
+});
+
+const routeTree = rootRoute.addChildren([indexRoute, adminRoute, incomeEntryRoute]);
 
 const router = createRouter({ routeTree });
 
@@ -36,4 +43,3 @@ declare module '@tanstack/react-router' {
 export default function App() {
   return <RouterProvider router={router} />;
 }
-

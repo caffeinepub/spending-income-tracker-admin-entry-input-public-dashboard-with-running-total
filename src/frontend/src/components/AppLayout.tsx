@@ -36,6 +36,16 @@ export default function AppLayout({ children }: AppLayoutProps) {
                 Dashboard
               </Link>
               <Link
+                to="/income-entry"
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                  currentPath === '/income-entry'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                }`}
+              >
+                Income Entry
+              </Link>
+              <Link
                 to="/admin"
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                   currentPath === '/admin'
@@ -73,4 +83,3 @@ export default function AppLayout({ children }: AppLayoutProps) {
     </div>
   );
 }
-

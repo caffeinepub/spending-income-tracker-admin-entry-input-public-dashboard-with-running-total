@@ -13,30 +13,45 @@ export const UserRole = IDL.Variant({
   'user' : IDL.Null,
   'guest' : IDL.Null,
 });
-export const UserProfile = IDL.Record({ 'name' : IDL.Text });
 export const Time = IDL.Int;
+export const UserProfile = IDL.Record({ 'name' : IDL.Text });
 export const IncomeEntry = IDL.Record({
   'icpTokenValue' : IDL.Float64,
   'date' : Time,
+  'personId' : IDL.Nat,
+  'timestamp' : Time,
   'incomeValue' : IDL.Float64,
   'icpAmount' : IDL.Float64,
 });
+export const Person = IDL.Record({ 'id' : IDL.Nat, 'name' : IDL.Text });
 
 export const idlService = IDL.Service({
   '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
   'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
-  'createEntry' : IDL.Func([IDL.Float64, IDL.Float64], [], []),
+  'createEntry' : IDL.Func(
+      [IDL.Nat, IDL.Float64, IDL.Float64, Time, IDL.Text, IDL.Text],
+      [],
+      [],
+    ),
+  'createPerson' : IDL.Func([IDL.Text, IDL.Text, IDL.Text], [IDL.Nat], []),
+  'deleteEntry' : IDL.Func([Time, IDL.Text, IDL.Text], [], []),
+  'deletePerson' : IDL.Func([IDL.Nat, IDL.Text, IDL.Text], [], []),
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
   'getEntries' : IDL.Func([], [IDL.Vec(IncomeEntry)], ['query']),
+  'getEntriesByPerson' : IDL.Func([IDL.Nat], [IDL.Vec(IncomeEntry)], ['query']),
+  'getPerson' : IDL.Func([IDL.Nat], [IDL.Opt(Person)], ['query']),
+  'getPersons' : IDL.Func([], [IDL.Vec(Person)], ['query']),
+  'getRolling30DayIncomeSum' : IDL.Func([IDL.Nat], [IDL.Float64], ['query']),
   'getTotalIncome' : IDL.Func([], [IDL.Float64], ['query']),
+  'getTotalIncomeByPerson' : IDL.Func([IDL.Nat], [IDL.Float64], ['query']),
   'getUserProfile' : IDL.Func(
       [IDL.Principal],
       [IDL.Opt(UserProfile)],
       ['query'],
     ),
   'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
-  'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+  'saveCallerUserProfile' : IDL.Func([UserProfile, IDL.Text, IDL.Text], [], []),
 });
 
 export const idlInitArgs = [];
@@ -47,30 +62,53 @@ export const idlFactory = ({ IDL }) => {
     'user' : IDL.Null,
     'guest' : IDL.Null,
   });
-  const UserProfile = IDL.Record({ 'name' : IDL.Text });
   const Time = IDL.Int;
+  const UserProfile = IDL.Record({ 'name' : IDL.Text });
   const IncomeEntry = IDL.Record({
     'icpTokenValue' : IDL.Float64,
     'date' : Time,
+    'personId' : IDL.Nat,
+    'timestamp' : Time,
     'incomeValue' : IDL.Float64,
     'icpAmount' : IDL.Float64,
   });
+  const Person = IDL.Record({ 'id' : IDL.Nat, 'name' : IDL.Text });
   
   return IDL.Service({
     '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
     'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
-    'createEntry' : IDL.Func([IDL.Float64, IDL.Float64], [], []),
+    'createEntry' : IDL.Func(
+        [IDL.Nat, IDL.Float64, IDL.Float64, Time, IDL.Text, IDL.Text],
+        [],
+        [],
+      ),
+    'createPerson' : IDL.Func([IDL.Text, IDL.Text, IDL.Text], [IDL.Nat], []),
+    'deleteEntry' : IDL.Func([Time, IDL.Text, IDL.Text], [], []),
+    'deletePerson' : IDL.Func([IDL.Nat, IDL.Text, IDL.Text], [], []),
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
     'getEntries' : IDL.Func([], [IDL.Vec(IncomeEntry)], ['query']),
+    'getEntriesByPerson' : IDL.Func(
+        [IDL.Nat],
+        [IDL.Vec(IncomeEntry)],
+        ['query'],
+      ),
+    'getPerson' : IDL.Func([IDL.Nat], [IDL.Opt(Person)], ['query']),
+    'getPersons' : IDL.Func([], [IDL.Vec(Person)], ['query']),
+    'getRolling30DayIncomeSum' : IDL.Func([IDL.Nat], [IDL.Float64], ['query']),
     'getTotalIncome' : IDL.Func([], [IDL.Float64], ['query']),
+    'getTotalIncomeByPerson' : IDL.Func([IDL.Nat], [IDL.Float64], ['query']),
     'getUserProfile' : IDL.Func(
         [IDL.Principal],
         [IDL.Opt(UserProfile)],
         ['query'],
       ),
     'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
-    'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+    'saveCallerUserProfile' : IDL.Func(
+        [UserProfile, IDL.Text, IDL.Text],
+        [],
+        [],
+      ),
   });
 };
 
