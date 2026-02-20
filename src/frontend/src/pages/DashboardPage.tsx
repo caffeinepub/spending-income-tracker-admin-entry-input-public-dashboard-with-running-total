@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useGetPersons, useGetEntriesByPerson, useGetTotalIncomeByPerson, useGetRolling30DayIncomeSum } from '../hooks/useQueries';
+import { useGetPersons, useGetEntriesByPerson, useGetTotalIncomeByPerson, useGetRolling30DayIncomeSum, useGetAllEntries } from '../hooks/useQueries';
 import EntriesTable from '../components/EntriesTable';
 import PersonTabs from '../components/PersonTabs';
-import { Calendar, DollarSign, Hash, Users } from 'lucide-react';
+import LoginButton from '../components/LoginButton';
+import { Calendar, DollarSign, Hash, Users, Download } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { exportToCSV } from '../utils/csvExport';
 
 export default function DashboardPage() {
   const { data: persons = [], isLoading: personsLoading } = useGetPersons();
@@ -11,6 +14,7 @@ export default function DashboardPage() {
   const { data: entries = [], isLoading: entriesLoading } = useGetEntriesByPerson(selectedPersonId);
   const { data: totalIncome = 0 } = useGetTotalIncomeByPerson(selectedPersonId);
   const { data: monthlyIncome = 0 } = useGetRolling30DayIncomeSum(selectedPersonId);
+  const { data: allEntries = [] } = useGetAllEntries();
 
   useEffect(() => {
     if (persons.length > 0 && selectedPersonId === null) {
@@ -29,12 +33,19 @@ export default function DashboardPage() {
     }).format(num);
   };
 
+  const handleExportCSV = () => {
+    exportToCSV(allEntries);
+  };
+
   if (personsLoading) {
     return (
       <div className="space-y-8">
-        <div>
-          <h2 className="text-3xl font-bold text-foreground mb-2">Income Dashboard</h2>
-          <p className="text-muted-foreground">Loading...</p>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h2 className="text-3xl font-bold text-foreground mb-2">Income Dashboard</h2>
+            <p className="text-muted-foreground">Loading...</p>
+          </div>
+          <LoginButton />
         </div>
       </div>
     );
@@ -43,11 +54,14 @@ export default function DashboardPage() {
   if (persons.length === 0) {
     return (
       <div className="space-y-8">
-        <div>
-          <h2 className="text-3xl font-bold text-foreground mb-2">Income Dashboard</h2>
-          <p className="text-muted-foreground">
-            Track and monitor all income entries with real-time calculations
-          </p>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h2 className="text-3xl font-bold text-foreground mb-2">Income Dashboard</h2>
+            <p className="text-muted-foreground">
+              Track and monitor all income entries with real-time calculations
+            </p>
+          </div>
+          <LoginButton />
         </div>
 
         <div className="bg-card rounded-lg border border-border overflow-hidden">
@@ -67,11 +81,14 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h2 className="text-3xl font-bold text-foreground mb-2">Income Dashboard</h2>
-        <p className="text-muted-foreground">
-          Track and monitor all income entries with real-time calculations
-        </p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h2 className="text-3xl font-bold text-foreground mb-2">Income Dashboard</h2>
+          <p className="text-muted-foreground">
+            Track and monitor all income entries with real-time calculations
+          </p>
+        </div>
+        <LoginButton />
       </div>
 
       <div className="bg-card rounded-lg border border-border overflow-hidden shadow-soft">
@@ -122,7 +139,19 @@ export default function DashboardPage() {
       </div>
 
       <div>
-        <h3 className="text-xl font-semibold text-foreground mb-4">All Entries</h3>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-xl font-semibold text-foreground">All Entries</h3>
+          <Button
+            onClick={handleExportCSV}
+            variant="outline"
+            size="sm"
+            className="gap-2"
+            disabled={allEntries.length === 0}
+          >
+            <Download className="w-4 h-4" />
+            Export CSV
+          </Button>
+        </div>
         <EntriesTable entries={entries} isLoading={entriesLoading} />
       </div>
     </div>

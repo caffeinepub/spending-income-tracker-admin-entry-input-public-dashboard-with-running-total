@@ -1,36 +1,50 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "New project",
-  "architectural_notes": [],
-  "known_issues": [],
-  "isFixRequest": false,
-  "existing_features": [],
-  "new_feature_requests": [
+  "summary": "Web application with admin login functionality",
+  "architectural_notes": [
+    "Admin authentication system required"
+  ],
+  "known_issues": [
+    "Admin login not accessible from landing page"
+  ],
+  "isFixRequest": true,
+  "existing_features": [
     {
-      "id": "AR-1",
-      "summary": "Sort all entries by newest date on top",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-2",
-      "summary": "Modify the backend getEntries query to return income entries sorted by date in descending order (newest first)",
+      "id": "feature-add-a-prominent-login-button-to-the-dashboard-landing-page-dashboardpage-tsx-that-triggers-internet-identity-authentication-for-admin-access",
+      "title": "Add a prominent login button to the dashboard landing page (DashboardPage.tsx) that triggers Internet Identity authentication for admin access",
       "reqIds": [
         "REQ-1"
       ],
-      "status": "pending"
+      "version": 1
     },
     {
-      "id": "AR-3",
-      "summary": "Ensure the EntriesTable component displays entries in the order received from the backend without additional sorting",
+      "id": "feature-position-the-login-button-in-a-prominent-location-on-the-dashboard-page-such-as-the-top-right-area-near-the-statistics-cards-or-in-the-header-section",
+      "title": "Position the login button in a prominent location on the dashboard page, such as the top-right area near the statistics cards or in the header section",
       "reqIds": [
         "REQ-2"
       ],
+      "version": 1
+    },
+    {
+      "id": "feature-reuse-the-existing-loginbutton-component-from-frontend-src-components-loginbutton-tsx-for-consistent-authentication-behavior-across-the-application",
+      "title": "Reuse the existing LoginButton component from frontend/src/components/LoginButton.tsx for consistent authentication behavior across the application",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Add admin login button on landing page",
+      "reqIds": [],
       "status": "pending"
     }
   ],
-  "projectName": "Sort entries by newest date first",
+  "gameProjectType": "none",
+  "projectName": "Income Tracker",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

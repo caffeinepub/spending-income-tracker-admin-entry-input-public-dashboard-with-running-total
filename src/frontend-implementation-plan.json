@@ -1,31 +1,54 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Sort entries by newest date first",
+  "title": "Add admin login button to landing page",
   "requirements": [
     {
-      "id": "REQ-2",
-      "summary": "Ensure the EntriesTable component displays entries in the order received from the backend without additional sorting",
+      "id": "REQ-1",
+      "summary": "Add Internet Identity login button to the dashboard landing page that triggers authentication for admin access",
       "acceptanceCriteria": [
-        "The EntriesTable renders entries in the exact order provided by the getEntries query",
-        "No client-side sorting is applied that would change the backend-provided order",
-        "The newest entry appears at the top of the table"
+        "Login button is visible on the dashboard page without requiring navigation to other pages",
+        "Button triggers Internet Identity authentication flow when clicked",
+        "Button shows appropriate states (logged in/logged out) based on authentication status",
+        "After successful login, user can access admin features"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/EntriesTable.tsx",
+          "path": "frontend/src/pages/DashboardPage.tsx",
           "operation": "modify",
-          "description": "Review and verify that the component renders entries in the order received from the backend without applying any client-side sorting logic. Ensure the entries array is displayed in its original order from the getEntries or getEntriesByPerson queries."
-        },
+          "description": "Import and render the LoginButton component in a prominent location on the dashboard page. Add the button to the header area or near the top of the statistics section to ensure visibility on page load. The LoginButton component from frontend/src/components/LoginButton.tsx provides Internet Identity authentication with proper state management (logged in/logged out). Position the button so it does not interfere with existing person tabs, statistics cards, or the entries table. Ensure the button is responsive and works on both mobile and desktop viewports."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Position the login button prominently on the dashboard page in the top-right area or header section",
+      "acceptanceCriteria": [
+        "Login button is easily discoverable on page load",
+        "Button placement does not interfere with existing dashboard content (person tabs, statistics, entries table)",
+        "Button is responsive and works well on mobile and desktop viewports"
+      ],
+      "file_operations": [
         {
           "path": "frontend/src/pages/DashboardPage.tsx",
           "operation": "modify",
-          "description": "Review the usage of entries data fetched from useGetEntries or useGetEntriesByPerson hooks. Verify that no sorting operations are applied to the entries array before passing it to EntriesTable. Ensure the component preserves the backend-provided order."
-        },
+          "description": "Adjust the layout structure to accommodate the LoginButton in a prominent, easily discoverable location such as the top-right corner of the page or within a header section above the person tabs. Use responsive CSS classes (Tailwind utilities) to ensure the button adapts to different screen sizes. Verify that the button placement does not overlap or interfere with the person tabs, statistics cards, entries table, or CSV export functionality."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Reuse the existing LoginButton component for consistent authentication behavior across the application",
+      "acceptanceCriteria": [
+        "LoginButton component is imported and rendered on DashboardPage",
+        "Authentication state is properly shared between dashboard and other pages",
+        "Logout functionality works correctly from the dashboard page"
+      ],
+      "file_operations": [
         {
-          "path": "frontend/src/pages/AdminPage.tsx",
+          "path": "frontend/src/pages/DashboardPage.tsx",
           "operation": "modify",
-          "description": "Review the usage of entries data in the admin interface. Verify that no sorting operations are applied to the entries array before displaying it. Ensure entries are shown in the order received from the backend."
+          "description": "Import the LoginButton component from frontend/src/components/LoginButton.tsx and integrate it into the DashboardPage. The LoginButton already handles Internet Identity authentication, login/logout state management, and query cache clearing on logout via the useInternetIdentity hook. No modifications to the LoginButton component itself are needed. Verify that authentication state is shared correctly across the application through the existing Internet Identity context provider, ensuring users can log in from the dashboard and access admin features on other pages (e.g., AdminPage, IncomeEntryPage) without re-authenticating."
         }
       ]
     }

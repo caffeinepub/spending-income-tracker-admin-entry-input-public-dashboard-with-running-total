@@ -1,4 +1,62 @@
 {
   "kind": "feature_evidence_report",
-  "features": []
+  "features": [
+    {
+      "featureId": "feature-add-a-prominent-login-button-to-the-dashboard-landing-page-dashboardpage-tsx-that-triggers-internet-identity-authentication-for-admin-access",
+      "featureTitle": "Add a prominent login button to the dashboard landing page (DashboardPage.tsx) that triggers Internet Identity authentication for admin access",
+      "files": [
+        "frontend/src/pages/DashboardPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-position-the-login-button-in-a-prominent-location-on-the-dashboard-page-such-as-the-top-right-area-near-the-statistics-cards-or-in-the-header-section",
+      "featureTitle": "Position the login button in a prominent location on the dashboard page, such as the top-right area near the statistics cards or in the header section",
+      "files": [
+        "frontend/src/pages/DashboardPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-reuse-the-existing-loginbutton-component-from-frontend-src-components-loginbutton-tsx-for-consistent-authentication-behavior-across-the-application",
+      "featureTitle": "Reuse the existing LoginButton component from frontend/src/components/LoginButton.tsx for consistent authentication behavior across the application",
+      "files": [
+        "frontend/src/pages/DashboardPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    }
+  ]
 }

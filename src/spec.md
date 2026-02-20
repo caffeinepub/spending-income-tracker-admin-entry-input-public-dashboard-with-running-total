@@ -1,10 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Sort income entries by newest date first in the entries table.
+**Goal:** Add admin login functionality directly on the dashboard landing page for easier access.
 
 **Planned changes:**
-- Modify backend getEntries query to return entries sorted by date in descending order
-- Ensure frontend displays entries in the order received from backend without additional sorting
+- Add LoginButton component to DashboardPage.tsx in a prominent location (top-right area or header)
+- Ensure button shows appropriate authentication states (logged in/logged out)
+- Make button responsive for mobile and desktop viewports
 
-**User-visible outcome:** Income entries will appear with the newest entries at the top of the table.
+**User-visible outcome:** Users can log in as admin directly from the dashboard landing page without navigating to other pages, and access admin features after authentication.

@@ -17,6 +17,19 @@ export function useGetEntries() {
   });
 }
 
+export function useGetAllEntries() {
+  const { actor, isFetching } = useActor();
+
+  return useQuery<IncomeEntry[]>({
+    queryKey: ['allEntries'],
+    queryFn: async () => {
+      if (!actor) return [];
+      return actor.getEntries();
+    },
+    enabled: !!actor && !isFetching,
+  });
+}
+
 export function useGetPersons() {
   const { actor, isFetching } = useActor();
 
@@ -136,6 +149,7 @@ export function useCreateIncomeEntry() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['entries'] });
+      queryClient.invalidateQueries({ queryKey: ['allEntries'] });
       queryClient.invalidateQueries({ queryKey: ['totalIncome'] });
       queryClient.invalidateQueries({ queryKey: ['rolling30DayIncome'] });
     },
@@ -155,6 +169,7 @@ export function useDeletePerson() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['persons'] });
       queryClient.invalidateQueries({ queryKey: ['entries'] });
+      queryClient.invalidateQueries({ queryKey: ['allEntries'] });
       queryClient.invalidateQueries({ queryKey: ['totalIncome'] });
       queryClient.invalidateQueries({ queryKey: ['rolling30DayIncome'] });
     },
@@ -173,6 +188,7 @@ export function useDeleteEntry() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['entries'] });
+      queryClient.invalidateQueries({ queryKey: ['allEntries'] });
       queryClient.invalidateQueries({ queryKey: ['totalIncome'] });
       queryClient.invalidateQueries({ queryKey: ['rolling30DayIncome'] });
     },
